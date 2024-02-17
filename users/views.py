@@ -4,3 +4,7 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, "users/index.html")
+
+def profiles(request, username):
+    context = { "page": "profile" }
+    return render(request, "users/profile.html", context)

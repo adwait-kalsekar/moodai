@@ -1,0 +1,41 @@
+{% load static %}
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url "home" %}" class="logo">
+                        <img src={% static "assets/images/logo.png" %} alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Search End ***** -->
+                    {% if page != "home" %}
+                    <div class="search-input">
+                      <form id="search" action="#">
+                        <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
+                        <i class="fa fa-search"></i>
+                      </form>
+                    </div>
+                    {% endif %}
+                    <!-- ***** Search End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="{% url "home" %}" class="{% if page == 'home' %}active{% endif %}">Home</a></li>
+                        <li><a href="browse.html" class="{% if page == 'posts' %}active{% endif %}">Posts</a></li>
+                        <li><a href="details.html" class="{% if page == 'find' %}active{% endif %}">Friends</a></li>
+                        <li><a href="streams.html" class="{% if page == 'inbox' %}active{% endif %}">Inbox</a></li>
+                        <li><a href="{% url "user_profile" "test" %}" class="{% if page == 'profile' %}active{% endif %}">Profile <img src={% static "assets/images/profile-header.jpg" %} alt=""></a></li>
+                    </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
