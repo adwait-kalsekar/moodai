@@ -3,6 +3,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.index, name="user_home"),
+    path("", views.index, name="index"),
+    path("login", views.login, name="login"),
+    path("logout", views.logout, name="logout"),
+    path("callback", views.callback, name="callback"),
     path("profile/<str:username>", views.profiles, name="user_profile")
 ]
