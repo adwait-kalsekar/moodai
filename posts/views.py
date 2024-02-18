@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+import requests
+from django.conf import settings
 
 from .models import Post
 from .image_generator import generate_from_prompt
@@ -30,12 +32,27 @@ def upload_post(request):
     context = { "page": page }
 
     if request.method == "POST":
-        prompt = request.POST["prompt"]
-        print(prompt)
-        image_url = generate_from_prompt(prompt)
+        prompt1 = request.POST["prompt1"]
+        prompt2 = request.POST["prompt2"]
+        image_url = generate_from_prompt(prompt1, prompt2)
+        print(image_url)
         request.session["image_url"] = image_url
-        context["prompt"] = prompt
+        context["prompt1"] = prompt1
+        context["prompt2"] = prompt2
         context["image_url"] = image_url
+
+        fastapi_url = settings.FASTAPI_URL
+
+        data = { "email": request.session["auth0_user"]["userinfo"]["email"], "prompt1": prompt1, "prompt2": prompt2, "image_url": image_url }
+        
+        try:
+            # Send POST request to FastAPI endpoint
+            response = requests.post(fastapi_url, json=data)
+
+        except Exception as err:
+            print("Error: ", err)
+            print("Could not upload to MongoDB through FastAPI")
+
 
     return render(request, "posts/upload.html", context)
 
@@ -55,6 +72,9 @@ def confirm_upload(request):
             post.user = profile
             post.image_url = image_url
             post.save()
+
+            profile.ai_credits -= 1
+            profile.save()
 
         except Exception as err:
             print("Error: ", err)

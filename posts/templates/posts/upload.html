@@ -17,7 +17,8 @@
                 </div>
                 <form id="post-upload" action={% url "upload-post" %} method="POST">
                     {% csrf_token %}
-                    <input type="text" placeholder="What is your mood like today? e.g. I feel like dancing." id='prompt' name="prompt" />
+                    <input type="text" placeholder="What is your mood like today? e.g. I feel like dancing." id='prompt' name="prompt1" />
+                    <input type="text" placeholder="What do you resonate with today?" id='prompt' name="prompt2" />
                     <div class="col-lg-12">
                       <div class="main-button prompt-button">
                         <button type="submit">Generate Post</button>
@@ -32,7 +33,7 @@
         </div>
         </div>
     </div>
-    {% if prompt %}
+    {% if prompt1 and prompt2 %}
     <div class="row">
       <div class="col-lg-12">
       <div class="page-content">
@@ -47,7 +48,7 @@
                   <div class="thumb">
                       <img class="confirm-post-img" src="{{image_url}}" alt="">
                   </div>
-                  <h4>Your Prompt<br><span>{{prompt}}</span></h4>
+                  <h4>Your Prompts:<br><span>{{prompt1}}</span><br><span>{{prompt2}}</span></h4>
                   
                   </div>
               </div>

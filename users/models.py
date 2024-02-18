@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
+
 import uuid
 
 # Create your models here.
@@ -11,6 +13,7 @@ class Profile(models.Model):
     short_intro = models.CharField(max_length=200, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     profile_image = models.ImageField(null=True, blank=True, upload_to='profiles/', default="profiles/default_user.png")
+    ai_credits = models.IntegerField(default=10, validators=[MinValueValidator(0)])
     
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)

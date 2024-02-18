@@ -80,9 +80,10 @@ def profile(request):
     
     try:
         profile = Profile.objects.get(email=request.session["auth0_user"]["userinfo"]["email"])
-        posts = Post.objects.filter(user=profile)
+        posts = Post.objects.filter(user=profile).order_by('-created')
         context["user_profile"] = profile
         context["posts"] = posts
+        context["num_posts"] = len(posts)
 
     except Exception as err:
         print("Error: ", err)
@@ -134,3 +135,6 @@ def view_all_users(request):
     except Exception as err:
         print("Error: ", err)
         return render(request, "error.html")
+
+def render_error(request, all_paths):
+    return render(request, "error404.html")
