@@ -18,6 +18,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
     # 3rd party
 
     # My Apps
+    "base.apps.BaseConfig",
     "users.apps.UsersConfig",
     "posts.apps.PostsConfig",
 ]

@@ -24,6 +24,7 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="{% url "home" %}" class="{% if page == 'home' %}active{% endif %}">Home</a></li>
+                        <li><a href="{% url "about" %}" class="{% if page == 'about' %}active{% endif %}">About</a></li>
                         <li><a href="{% url "view-posts" %}" class="{% if page == 'explore' %}active{% endif %}">Explore</a></li>
                         <li><a href="{% url "upload-post" %}" class="{% if page == 'upload' %}active{% endif %}">Upload</a></li>
                         <li><a href="{% url "all-users" %}" class="{% if page == 'users' %}active{% endif %}">Connect</a></li>
