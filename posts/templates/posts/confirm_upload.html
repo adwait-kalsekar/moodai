@@ -1,0 +1,56 @@
+{% extends "main.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+        <div class="page-content">
+
+            <div class="row">
+            <div class="col-lg-6">
+                <div class="featured-games header-text">
+                <div class="heading-section">
+                    <h4><em>Confirm</em> your upload</h4>
+                </div>
+                <div class="item">
+                    <div class="thumb">
+                        <img class="confirm-post-img" src={% static "assets/images/generated.png" %} alt="">
+                    </div>
+                    <h4>Mood<br><span>{{mood}} Mood here</span></h4>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="featured-games header-text">
+                <div class="item">
+                    
+                    <div class="confirm-upload">
+                        <form id="confirm-upload" action={% url "confirm-upload" %} method="POST">
+                          {% csrf_token %}
+                          <label class="confirm-upload-label">Title</label>
+                          <input type="text" placeholder="Enter a title for your post" id='title' name="title" />
+                          <label class="confirm-upload-label">Caption</label>
+                          <input type="text" placeholder="What does this image represent for you" id='username' name="username" />
+                          <div class="col-lg-12">
+                            <div class="main-button prompt-button">
+                              <button type="submit">Save</button>
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            </div>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

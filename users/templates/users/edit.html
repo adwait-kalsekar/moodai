@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+
+          <!-- ***** Banner Start ***** -->
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="main-profile ">
+                <h1>Hello, {{user_profile.username}}</h1>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="clips">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="heading-section">
+                            <h4>Change Info<h4>
+                          </div>
+                        </div>
+                        <div class="user-update">
+                          <form id="user-update" action={% url "edit-profile" %} method="POST">
+                            {% csrf_token %}
+                            <label class="user-update-label">Name</label>
+                            <input type="text" placeholder="Enter Your Name" id='name' name="name" />
+                            <label class="user-update-label">Username</label>
+                            <input type="text" placeholder="Enter Your Username" id='username' name="username" />
+                            <div class="col-lg-12">
+                              <div class="main-button">
+                                <button type="submit">Save</button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ***** Banner End ***** -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+

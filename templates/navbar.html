@@ -12,7 +12,7 @@
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Search End ***** -->
-                    {% if page != "home" %}
+                    {% if page == "explore" or page == "friends" %}
                     <div class="search-input">
                       <form id="search" action="#">
                         <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
@@ -24,11 +24,12 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="{% url "home" %}" class="{% if page == 'home' %}active{% endif %}">Home</a></li>
-                        <li><a href="browse.html" class="{% if page == 'posts' %}active{% endif %}">Posts</a></li>
+                        <li><a href="{% url "view-posts" %}" class="{% if page == 'explore' %}active{% endif %}">Explore</a></li>
+                        <li><a href="{% url "upload-post" %}" class="{% if page == 'upload' %}active{% endif %}">Upload</a></li>
                         <li><a href="details.html" class="{% if page == 'find' %}active{% endif %}">Friends</a></li>
                         <li><a href="streams.html" class="{% if page == 'inbox' %}active{% endif %}">Inbox</a></li>
-                        {% if request.session.user %}
-                        <li><a href="{% url "user_profile" "test" %}" class="{% if page == 'profile' %}active{% endif %}">Profile <img src={% static "assets/images/profile-header.jpg" %} alt=""></a></li>
+                        {% if request.session.auth0_user %}
+                        <li><a href="{% url "user-profile" %}" class="{% if page == 'profile' %}active{% endif %}">Profile <img src={% static "assets/images/default_user.png" %} alt=""></a></li>
                         {% else %}
                         <li><a href="{% url "login" %}">Log IN / Sign UP </a></li>
                         {% endif %}
