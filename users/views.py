@@ -6,6 +6,7 @@ from django.urls import reverse
 from urllib.parse import quote_plus, urlencode
 
 from .models import Profile
+from posts.models import Post
 
 # OAuth Setup
 oauth = OAuth()
@@ -75,15 +76,19 @@ def profile(request):
     if not "auth0_user" in request.session:
         return redirect('home')
     
+    context = { "page": page, "user": request.session["auth0_user"] }
+    
     try:
         profile = Profile.objects.get(email=request.session["auth0_user"]["userinfo"]["email"])
-        user_profile = { "email": profile.email, "username": profile.username, "name": profile.name }
+        posts = Post.objects.filter(user=profile)
+        context["user_profile"] = profile
+        context["posts"] = posts
 
     except Exception as err:
         print("Error: ", err)
         return render(request, "error.html")
 
-    context = { "page": page, "user": request.session["auth0_user"], "user_profile": user_profile }
+    
     return render(request, "users/profile.html", context)
 
 def edit_profile(request):
@@ -95,21 +100,37 @@ def edit_profile(request):
     
     try:
         profile = Profile.objects.get(email=request.session["auth0_user"]["userinfo"]["email"])
-        user_profile = { "email": profile.email, "username": profile.username, "name": profile.name }
-
-        print(user_profile)
 
         if request.method == "POST":
-            profile.name = request.POST["name"]
-            profile.username = request.POST["username"]
-            profile.save()
-            user_profile = { "email": profile.email, "username": profile.username, "name": profile.name }
-            print(user_profile)
+            if request.POST["name"]:
+                profile.name = request.POST["name"]
+            if request.POST["username"]:
+                profile.username = request.POST["username"]
 
-        context = { "page": page, "user": request.session["auth0_user"], "user_profile": user_profile }
+            profile.save()
+            return redirect("user-profile")
+
+        context = { "page": page, "user": request.session["auth0_user"], "user_profile": profile }
         return render(request, "users/edit.html", context)
 
     except Exception as err:
         print("Error: ", err)
         return render(request, "error.html")
 
+def view_all_users(request):
+    page = "users"
+    try:
+        if "auth0_user" in request.session:
+            users = Profile.objects.exclude(email=request.session["auth0_user"]["userinfo"]["email"])
+
+        else:
+            users = Profile.objects.all()
+        
+
+        context = { "page": page, "users": users }
+
+        return render(request, "users/all_users.html", context)
+    
+    except Exception as err:
+        print("Error: ", err)
+        return render(request, "error.html")

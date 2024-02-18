@@ -1,0 +1,45 @@
+{% extends "main.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+        <div class="page-content">
+
+            <!-- ***** Featured Games Start ***** -->
+            <div class="row">
+            <div class="col-lg-12">
+                <div class="top-streamers">
+                <div class="heading-section">
+                    <h4>Connect with People</h4>
+                </div>
+                {% if not users %}
+                <h5>No users</h5>
+                {% else %}
+                <ul>
+                    {% for user in users %}
+                    <li>
+                    <img src="{{user.profile_image.url}}" alt="" style="max-width: 46px; border-radius: 50%; margin-right: 15px;">
+                    <h6 style="color: white">{{user.username}} | </h6>
+                    <h6>{{user.email}}</h6>
+                    <div class="main-button">
+                        <a href="#">Follow</a>
+                    </div>
+                    </li>
+                    {% endfor %}
+                    
+                </ul>
+                {% endif %}
+                </div>
+            </div>
+            </div>
+            <!-- ***** Featured Games End ***** -->
+
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

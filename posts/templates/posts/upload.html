@@ -45,7 +45,7 @@
               </div>
               <div class="item">
                   <div class="thumb">
-                      <img class="confirm-post-img" src={% static "assets/images/generated.png" %} alt="">
+                      <img class="confirm-post-img" src="{{image_url}}" alt="">
                   </div>
                   <h4>Your Prompt<br><span>{{prompt}}</span></h4>
                   
@@ -61,9 +61,9 @@
                       <form id="confirm-upload" action={% url "confirm-upload" %} method="POST">
                         {% csrf_token %}
                         <label class="confirm-upload-label">Title</label>
-                        <input type="text" placeholder="Enter a title for your post" id='title' name="title" />
+                        <input type="text" placeholder="Enter a title for your post" id='title' name="title" required />
                         <label class="confirm-upload-label">Caption</label>
-                        <input type="text" placeholder="What does this image represent for you" id='username' name="username" />
+                        <input type="text" placeholder="What does this image represent for you" id='caption' name="caption" required />
                         <div class="col-lg-12">
                           <div class="main-button prompt-button">
                             <button type="submit">Post</button>
