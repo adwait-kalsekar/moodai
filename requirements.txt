@@ -7,8 +7,10 @@ charset-normalizer==3.3.2
 cryptography==42.0.3
 Django==4.2
 dnspython==2.6.0
+gunicorn==21.2.0
 idna==3.6
 monsterapi==1.0.6
+packaging==23.2
 pillow==10.2.0
 psycopg2==2.9.9
 pycparser==2.21
