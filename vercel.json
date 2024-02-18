@@ -2,7 +2,10 @@
   "builds": [
     {
       "src": "moodai/wsgi.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "Python3.11"
+      }
     }
   ],
   "routes": [
