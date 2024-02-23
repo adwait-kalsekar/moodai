@@ -4,12 +4,14 @@ from django.conf import settings
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from urllib.parse import quote_plus, urlencode
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Profile
 from posts.models import Post
 
 # OAuth Setup
 oauth = OAuth()
+
 
 oauth.register(
     "auth0",
@@ -27,14 +29,16 @@ oauth.register(
 def index(request):
     return redirect(reverse("home"))
 
+@csrf_exempt
 def login(request):
-    if "user" in request.session:
-        return redirect('home')
+    if "auth0_user" in request.session:
+        return redirect('view-posts')
     
     return oauth.auth0.authorize_redirect(
         request, request.build_absolute_uri(reverse("callback"))
     )
 
+@csrf_exempt
 def callback(request):
     token = oauth.auth0.authorize_access_token(request)
     request.session["auth0_user"] = token
@@ -56,6 +60,7 @@ def callback(request):
     print(token["userinfo"]["email"])
     return redirect(request.build_absolute_uri(reverse("index")))
 
+@csrf_exempt
 def logout(request):
     request.session.clear()
 
@@ -70,6 +75,7 @@ def logout(request):
         ),
     )
 
+@csrf_exempt
 def profile(request):
     page = "profile"
 
@@ -92,6 +98,7 @@ def profile(request):
     
     return render(request, "users/profile.html", context)
 
+@csrf_exempt
 def edit_profile(request):
     page = "edit-profile"
 
@@ -118,6 +125,7 @@ def edit_profile(request):
         print("Error: ", err)
         return render(request, "error.html")
 
+@csrf_exempt
 def view_all_users(request):
     page = "users"
     try:

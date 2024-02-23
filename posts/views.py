@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 import requests
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Post
 from .image_generator import generate_from_prompt
@@ -14,16 +15,18 @@ def index(request):
     context = { "page": page }
     return render(request, "posts/index.html", context)
 
+@csrf_exempt
 def view_posts(request):
     page = "explore"
 
     newest_to_oldest = Post.objects.all().order_by('-created')
 
-    all_posts = Post.objects.all()
+    # all_posts = Post.objects.all()
 
-    context = { "page": page, "recent_posts": newest_to_oldest, "all_posts": all_posts }
+    context = { "page": page, "recent_posts": newest_to_oldest, "all_posts": newest_to_oldest }
     return render(request, "posts/explore.html", context)
 
+@csrf_exempt
 def upload_post(request):
     if not "auth0_user" in request.session:
         return redirect('login')
@@ -56,6 +59,7 @@ def upload_post(request):
 
     return render(request, "posts/upload.html", context)
 
+@csrf_exempt
 def confirm_upload(request):
     if not "auth0_user" in request.session:
         return redirect('login')
@@ -85,5 +89,6 @@ def confirm_upload(request):
 
     return redirect("user-profile")
 
+@csrf_exempt
 def single_post(request, id):
     return render(request, "posts/single_post.html")

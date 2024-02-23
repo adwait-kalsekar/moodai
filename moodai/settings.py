@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # 3rd party
-
+    "corsheaders",
     # My Apps
     "base.apps.BaseConfig",
     "users.apps.UsersConfig",
